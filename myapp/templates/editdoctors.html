@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Edit Doctor</h4>
+                    <p class="card-description"> Basic form elements </p>
+                    <form class="forms-sample"  method="post" action="{% url 'updatedoctor' dataid=products.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label>Select Department</label>
+                            <select class="form-control" name="Departmentname">
+                                <option>Select Department</option>
+                                {% for d in data %}
+                                <option>{{d.Department}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                      <div class="form-group">
+                        <label for="exampleInputName1">Doctor Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="name" name="Name" value="{{products.Name}}">
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleInputName1">Qualification</label>
+                        <input type="text" class="form-control"  placeholder="qualification" name="Qualification" value="{{products.Qualification}}">
+                      </div>
+                        <div class="form-group-2 mb-4">
+                        <textarea name="About" id="message" class="form-control" rows="6" placeholder="About" value="{{products.Qualification}}"></textarea>
+                    </div>
+
+
+
+
+                      <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="image">
+                          <img src="{{products.image.url}}" width="100px" height="100px">
+                      </div>
+
+
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      <button class="btn btn-dark">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+      {% for i in messages %}
+           {% if i.tags == 'warning' %}
+               <script>
+                    swal('{{i}}','','warning');
+               </script>
+           {% elif i.tags == 'error' %}
+               <script>
+                    swal('{{i}}','','error');
+               </script>
+           {% else%}
+               <script>
+                    swal('{{i}}','','success');
+               </script>
+           {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
+{% endblock %}
